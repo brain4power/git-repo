@@ -5,7 +5,8 @@ import csv
 class CarBase:
     def __init__(self, brand, photo_file_name, carrying):
         pass
-    def get_photo_file_ext(self):
+    def get_photo_file_ext(self, photo_file_name):
+        #os.path.splitext
         pass
 
 
@@ -33,17 +34,24 @@ def get_car_list(csv_filename):
         reader = csv.reader(csv_fd, delimiter=';')
         next(reader)  # пропускаем заголовок
         for row in reader:
-
-            print(row)
+            if len(row) and (row[0] in ['car', 'truck', 'spec_machine']):
+                print(row)
+                if len(row) and (row[0] is 'car'):
+                    pass
+                elif len(row) and (row[0] is 'truck'):
+                    pass
+                elif len(row) and (row[0] is 'spec_machine'):
+                    pass
+            # else:
+            #     pass
+                # if row[0] is 'car':
+                #     print('est odna!')
+            #car_list.append(Car(row))
     return car_list
-
-
-car_turple = {'car', 'truck', 'SpecMachine'}
 
 get_car_list('coursera_week3_cars.csv')
 
-if 'car' in car_turple:
-    print('tyta')
+
 
 
 # Далее необходимо реализовать функцию, на вход которой подается имя файла в формате csv.
