@@ -34,25 +34,16 @@ def get_car_list(csv_filename):
         reader = csv.reader(csv_fd, delimiter=';')
         next(reader)  # пропускаем заголовок
         for row in reader:
-            if len(row) and (row[0] in ['car', 'truck', 'spec_machine']):
-                print(row)
-                if len(row) and (row[0] is 'car'):
-                    pass
-                elif len(row) and (row[0] is 'truck'):
-                    pass
-                elif len(row) and (row[0] is 'spec_machine'):
-                    pass
-            # else:
-            #     pass
-                # if row[0] is 'car':
-                #     print('est odna!')
-            #car_list.append(Car(row))
+            if len(row) and row[0] == 'car' and row[1] and row[2] and row[3] and row[5]:
+                car_list.append(Car)
+            elif len(row) and row[0] == 'truck' and row[1] and row[3] and row[5]:
+                car_list.append(Truck)
+            elif len(row) and row[0] == 'spec_machine' and row[1] and row[3] and row[5] and row[6]:
+                car_list.append(SpecMachine)
     return car_list
 
-get_car_list('coursera_week3_cars.csv')
 
-
-
+print(get_car_list('coursera_week3_cars.csv'))
 
 # Далее необходимо реализовать функцию, на вход которой подается имя файла в формате csv.
 # Файл содержит данные аналогичные строкам из таблицы. Вам необходимо прочитать этот файл
