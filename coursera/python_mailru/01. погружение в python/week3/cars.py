@@ -4,10 +4,9 @@ import csv
 
 class CarBase:
     def __init__(self, brand, photo_file_name, carrying):
-        # self.brand = brand
-        # self.photo_file_name = photo_file_name
-        # self.carrying = carrying
-        pass
+        self.brand = brand
+        self.photo_file_name = photo_file_name
+        self.carrying = carrying
 
     def get_photo_file_ext(self):
         return os.path.splitext(self.photo_file_name)[1]
@@ -15,17 +14,13 @@ class CarBase:
 
 class Car(CarBase):
     def __init__(self, brand, photo_file_name, carrying, passenger_seats_count):
-        self.brand = brand
-        self.photo_file_name = photo_file_name
-        self.carrying = carrying
+        super().__init__(brand, photo_file_name, carrying)
         self.passenger_seats_count = passenger_seats_count
 
 
 class Truck(CarBase):
     def __init__(self, brand, photo_file_name, carrying, body_whl):
-        self.brand = brand
-        self.photo_file_name = photo_file_name
-        self.carrying = carrying
+        super().__init__(brand, photo_file_name, carrying)
         if body_whl:
             self.body_length, self.body_width, self.body_height = map(float, body_whl.split('x'))
         else:
@@ -37,9 +32,7 @@ class Truck(CarBase):
 
 class SpecMachine(CarBase):
     def __init__(self, brand, photo_file_name, carrying, extra):
-        self.brand = brand
-        self.photo_file_name = photo_file_name
-        self.carrying = carrying
+        super().__init__(brand, photo_file_name, carrying)
         self.extra = extra
 
 
@@ -61,7 +54,7 @@ def get_car_list(csv_filename):
     return car_list
 
 
-print(get_car_list('coursera_week3_cars.csv'))
+#print(get_car_list('coursera_week3_cars.csv'))
 # print(get_car_list('coursera_week3_cars.csv')[1].get_body_volume())
 
 # Далее необходимо реализовать функцию, на вход которой подается имя файла в формате csv.
