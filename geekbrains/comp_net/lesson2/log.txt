@@ -1,0 +1,6 @@
+1. laptop 2: interface - fastEthernet - переключение на авто.
+2. подключение hab0 к Wireless Router0 через Ethernet
+3. laptop 0: interface - fastEthernet - переключение на авто.
+4. laptop 0 к Switch2 подключение через GigabitEthernet
+5. server0 к Hub 2: меняем провод подключения.
+6. замена кабеля между Wireless Router0 и Switch1 на Cross-over
