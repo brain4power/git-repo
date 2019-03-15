@@ -13,27 +13,45 @@ class ClientServerProtocol(asyncio.Protocol):
         resp = self.process_data(data.decode())
         self.transport.write(resp.encode())
 
-    def process_data(self, resp):
+    def process_data(self, data):
         try:
-            assert resp != ''
-            resp = resp.split()
-            assert 1 < len(resp) < 5
-            if resp[0].lower == 'put':
-                assert 2 < len(resp) < 5
+            assert data != ''
+            data = data.split()
+            assert 1 < len(data) < 5
+            if data[0].lower == 'put':
+                assert 2 < len(data) < 5
                 try:
-                    return self._process_put(resp[1], resp[2], timestamp=resp[3])
+                    return self._process_put(data[1], data[2], timestamp=data[3])
                 except IndexError:
-                    return self._process_put(resp[1], resp[2])
-            elif resp[0].lower == 'get':
-                return self._process_get()
+                    return self._process_put(data[1], data[2])
+            elif data[0].lower == 'get':
+                assert len(data) == 2
+                return self._process_get(data[1])
             else:
                 raise AssertionError
         except AssertionError:
             return 'error\nwrong command\n\n'
 
-    def _process_get(self):
+    def _process_get(self, param):
         # упорядочивать по timestamp
-        pass
+        try:
+            if param == '*':
+                result = f'ok\n'
+                for each in self._metrics:
+                    result += self._make_response_for_get(each)
+                return result
+            elif param in self._metrics:
+                return f'ok\n' + self._make_response_for_get(param)
+            else:
+                raise AssertionError
+        except AssertionError:
+            return 'error\nwrong command\n\n'
+
+    def _make_response_for_get(self, name):
+        response = f'{name} '
+        for each in sorted(self._metrics[name]):
+            response += f'{each[1]} {each[0]}\n'
+        return response
 
     def _process_put(self, name, value, timestamp=str(int(time.time()))):
         if name in self._metrics:
