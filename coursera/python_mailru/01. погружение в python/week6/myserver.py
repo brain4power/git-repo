@@ -33,15 +33,14 @@ class ClientServerProtocol(asyncio.Protocol):
             return 'error\nwrong command\n\n'
 
     def _process_get(self, param):
-        # упорядочивать по timestamp
         try:
             if param == '*':
                 result = f'ok\n'
                 for each in self._metrics:
                     result += self._make_response_for_get(each)
-                return result
+                return result + '\n'
             elif param in self._metrics:
-                return f'ok\n' + self._make_response_for_get(param)
+                return f'ok\n' + self._make_response_for_get(param) + '\n'
             else:
                 raise AssertionError
         except AssertionError:
