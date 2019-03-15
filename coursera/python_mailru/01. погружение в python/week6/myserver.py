@@ -47,6 +47,7 @@ class ClientServerProtocol(asyncio.Protocol):
                 self._metrics[name].append((timestamp, value))
         else:
             self._metrics[name] = [(timestamp, value)]
+        return 'ok\n\n'
 
 
 def run_server(host, port):
@@ -65,4 +66,3 @@ def run_server(host, port):
     server.close()
     loop.run_until_complete(server.wait_closed())
     loop.close()
-
