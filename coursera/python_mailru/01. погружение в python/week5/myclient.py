@@ -18,7 +18,7 @@ client.put("eardrum.memory", 4200000)
 print(client.get("*"))
 """
 
-
+# TODO сделать обработку времени ответа сервера
 class Client:
     def __init__(self, host, port, timeout=None):
         try:

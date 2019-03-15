@@ -33,18 +33,15 @@ class ClientServerProtocol(asyncio.Protocol):
             return 'error\nwrong command\n\n'
 
     def _process_get(self, param):
-        try:
-            if param == '*':
-                result = f'ok\n'
-                for each in self._metrics:
-                    result += self._make_response_for_get(each)
-                return result + '\n'
-            elif param in self._metrics:
-                return f'ok\n' + self._make_response_for_get(param) + '\n'
-            else:
-                raise AssertionError
-        except AssertionError:
-            return 'error\nwrong command\n\n'
+        if param == '*':
+            result = 'ok\n'
+            for each in self._metrics:
+                result += self._make_response_for_get(each)
+            return result + '\n'
+        elif param in self._metrics:
+            return f'ok\n' + self._make_response_for_get(param) + '\n'
+        else:
+            return 'ok\n\n'
 
     def _make_response_for_get(self, name):
         response = f'{name} '
