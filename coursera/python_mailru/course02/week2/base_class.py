@@ -2,17 +2,18 @@ import math
 
 
 class Base:
-    pass
-
-
-class A:
-
     def __init__(self, data, result):
         self.data = data
         self.result = result
 
     def get_answer(self):
         return [int(x >= 0.5) for x in self.data]
+
+
+class A(Base):
+
+    def __init__(self, data, result):
+        super().__init__(data, result)
 
     def get_score(self):
         ans = self.get_answer()
@@ -24,19 +25,10 @@ class A:
                                                         self.result)])
 
 
-class B:
+class B(Base):
 
     def __init__(self, data, result):
-        self.data = data
-        self.result = result
-
-    def get_answer(self):
-        return [int(x >= 0.5) for x in self.data]
-
-    def get_score(self):
-        ans = self.get_answer()
-        return sum([int(x == y) for (x, y) in zip(ans, self.result)]) \
-               / len(ans)
+        super().__init__(data, result)
 
     def get_loss(self):
         return -sum([y * math.log(x) + (1 - y) * math.log(1 - x)
@@ -60,14 +52,10 @@ class B:
         return 2 * pre * rec / (pre + rec)
 
 
-class C:
+class C(Base):
 
     def __init__(self, data, result):
-        self.data = data
-        self.result = result
-
-    def get_answer(self):
-        return [int(x >= 0.5) for x in self.data]
+        super().__init__(data, result)
 
     def get_score(self):
         ans = self.get_answer()
