@@ -217,5 +217,11 @@ class Curse(AbstractNegative):
 
 hero = Hero()
 print(hero.get_stats())
-bers = Berserk(hero)
-print(bers.get_stats())
+brs1 = Berserk(hero)
+brs2 = Berserk(brs1)
+cur1 = Curse(brs2)
+print(cur1.get_positive_effects())
+print(cur1.get_stats())
+cur1.base = brs1
+print(cur1.get_positive_effects())
+print(cur1.get_stats())
