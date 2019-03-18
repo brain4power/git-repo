@@ -26,7 +26,6 @@ class A(Base):
 
 
 class B(Base):
-
     def __init__(self, data, result):
         super().__init__(data, result)
 
@@ -53,7 +52,6 @@ class B(Base):
 
 
 class C(Base):
-
     def __init__(self, data, result):
         super().__init__(data, result)
 
