@@ -5,7 +5,6 @@ import os
 
 # Вспомогательная функция, её наличие не обязательно и не будет проверяться
 def build_tree(start, end, path):
-    link_re = re.compile(r"(?<=/wiki/)[\w()]+")  # Искать ссылки можно как угодно, не обязательно через re
     files = dict.fromkeys(os.listdir(path))  # Словарь вида {"filename1": None, "filename2": None, ...}
 
     for key in files:
@@ -62,11 +61,7 @@ def parse(start, end, path):
     """
 
     bridge = build_bridge(start, end, path)  # Искать список страниц можно как угодно, даже так: bridge = [end, start]
-    # bridge = ['Stone_Age']
-    # Когда есть список страниц, из них нужно вытащить данные и вернуть их
     out = {}
-    imgs = 0
-    headers = 0
 
     def count_imgs(soup_page):
         total = 0
@@ -102,7 +97,6 @@ def parse(start, end, path):
                 if tag.nextSibling.name and tag.nextSibling.name != 'br':
                     sublings_array.append(tag.nextSibling.name)
                 tag = tag.nextSibling
-            # print(sublings_array)
             max_count_a = 0
             count_in = 0
             for name in sublings_array:
@@ -110,8 +104,6 @@ def parse(start, end, path):
                     count_in += 1
                     if count_in > max_count_a:
                         max_count_a = count_in
-                        # if count_in == 11:
-                        #     print(sublings_array)
                 else:
                     count_in = 0
 
@@ -142,19 +134,6 @@ def parse(start, end, path):
         linkslen = get_links_len(body)
         lists = get_lists(body)
 
-
-        # TODO посчитать реальные значения
-        # Количество картинок (img) с шириной (width) не меньше 200
-        # Количество заголовков, первая буква текста внутри которого: E, T или C
-        # Длина максимальной последовательности ссылок, между которыми нет других тегов
-        # Количество списков, не вложенных в другие списки
-
         out[file] = [imgs, headers, linkslen, lists]
 
     return out
-
-
-start = 'Stone_Age'
-end = 'Python_(programming_language)'
-
-print(parse(start, end, '/Users/AGukov/git-repo/coursera/python_mailru/course03/week2/wiki/'))
